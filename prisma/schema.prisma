@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -72,12 +72,16 @@ model Usage {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  type      String   // "enhancement"
+  type      String   // "enhancement" or "purchase"
   createdAt DateTime @default(now())
 
-  // Metadata over de foto
+  // Metadata voor enhancement
   originalSize  Int?
   enhancedSize  Int?
+
+  // Metadata voor purchases (om dubbele credits te voorkomen)
+  stripeSessionId String?  @unique
+  creditsAdded    Int?
 }
 
 // Credit packages voor aankoop
