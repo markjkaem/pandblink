@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { type PresetType, getCreditCost, PRESET_INFO } from "@/lib/stripe";
+import { type PresetType, getCreditCost, PRESET_INFO } from "@/lib/presets";
 
 export type { PresetType };
 export { getCreditCost };
