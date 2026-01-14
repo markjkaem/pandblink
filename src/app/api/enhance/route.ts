@@ -23,44 +23,44 @@ function getCreditCost(preset: PresetType): number {
 function getModelConfig(preset: PresetType, options: EnhancementOptions) {
   switch (preset) {
     case "standard":
-      // Clarity Upscaler - zichtbare verbetering in kleuren en scherpte
+      // Clarity Upscaler - kleur en contrast verbetering, geen hallucinaties
       return {
         model: "philz1337x/clarity-upscaler:dfad41707589d68ecdccd1dfa600d55a208f9310748e44bfe35b4a6291453d5e",
         input: {
-          prompt: "professional real estate photo, bright natural lighting, enhanced colors, sharp details, clean image",
-          negative_prompt: "dark, blurry, low quality, artifacts, noise, underexposed",
+          prompt: "professional real estate photo, enhanced colors, better contrast, brighter, vibrant but natural",
+          negative_prompt: "dark, blurry, low quality, artifacts, changes to structure, added objects",
           scale: 2,
-          creativity: 0.35,
-          resemblance: 0.85,
+          creativity: 0.2,
+          resemblance: 0.95,
           num_inference_steps: 18,
         },
       };
     case "premium":
-      // Magic Image Refiner - sterke HDR en levendige kleuren
+      // Magic Image Refiner - HDR en kleuren, behoud origineel
       return {
         model: "fermatresearch/magic-image-refiner:507ddf6f977a7e30e46c0daefd30de7d563c72322f9e4cf7cbac52ef0f667b13",
         input: {
-          prompt: "professional real estate photography, bright natural lighting, vibrant saturated colors, sharp details, strong HDR effect, magazine quality",
-          negative_prompt: "dark, blurry, low quality, artifacts, noise, overexposed, dull colors, flat lighting",
-          hdr: 0.5,
-          creativity: 0.45,
-          resemblance: 0.65,
+          prompt: "professional real estate photography, bright natural lighting, vibrant colors, enhanced contrast, HDR look",
+          negative_prompt: "dark, blurry, artifacts, changes to structure, added objects, hallucinations",
+          hdr: 0.4,
+          creativity: 0.25,
+          resemblance: 0.85,
           resolution: "original",
-          steps: 22,
-          guidance_scale: 8,
+          steps: 20,
+          guidance_scale: 7,
         },
       };
     case "crystal":
-      // Crystal Clear - maximale AI verbetering, duidelijk zichtbaar verschil
+      // Crystal Clear - meer effect maar nog steeds veilig
       return {
         model: "philz1337x/clarity-upscaler:dfad41707589d68ecdccd1dfa600d55a208f9310748e44bfe35b4a6291453d5e",
         input: {
-          prompt: "professional real estate photo, strong HDR, bright natural lighting, ultra sharp details, vivid vibrant colors, magazine quality photography",
-          negative_prompt: "dark, blurry, low quality, artifacts, noise, underexposed, grainy, dull, flat",
+          prompt: "professional real estate photo, HDR, bright natural lighting, vivid colors, enhanced contrast, sharp",
+          negative_prompt: "dark, blurry, low quality, artifacts, changes to structure, added objects, hallucinations",
           scale: 2,
-          creativity: 0.55,
-          resemblance: 0.7,
-          num_inference_steps: 24,
+          creativity: 0.3,
+          resemblance: 0.9,
+          num_inference_steps: 20,
         },
       };
     default:
@@ -68,11 +68,11 @@ function getModelConfig(preset: PresetType, options: EnhancementOptions) {
       return {
         model: "philz1337x/clarity-upscaler:dfad41707589d68ecdccd1dfa600d55a208f9310748e44bfe35b4a6291453d5e",
         input: {
-          prompt: "professional real estate photo, bright natural lighting, enhanced colors, sharp details",
-          negative_prompt: "dark, blurry, low quality, artifacts, noise",
+          prompt: "professional real estate photo, enhanced colors, better contrast, brighter",
+          negative_prompt: "dark, blurry, artifacts, changes to structure, added objects",
           scale: 2,
-          creativity: 0.35,
-          resemblance: 0.85,
+          creativity: 0.2,
+          resemblance: 0.95,
           num_inference_steps: 18,
         },
       };
