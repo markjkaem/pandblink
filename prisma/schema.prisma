@@ -79,6 +79,12 @@ model Usage {
   originalSize  Int?
   enhancedSize  Int?
 
+  // History velden voor verbeterde foto's
+  enhancedImageUrl  String?   // URL van verbeterde foto (tijdelijk)
+  originalFileName  String?   // Originele bestandsnaam
+  imageWidth        Int?      // Breedte van de foto
+  imageHeight       Int?      // Hoogte van de foto
+
   // Metadata voor purchases (om dubbele credits te voorkomen)
   stripeSessionId String?  @unique
   creditsAdded    Int?
