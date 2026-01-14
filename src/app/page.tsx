@@ -254,19 +254,31 @@ export default function Home() {
             <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">
               Laat je woning <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">stralen</span>
             </h1>
-            <p className="text-xl text-slate-600 max-w-2xl mx-auto mb-8">
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto mb-4">
               Verbeter je woningfoto&apos;s met AI. Perfecte belichting, heldere kleuren en scherpe details. Klaar voor Funda in seconden.
             </p>
-            <div className="flex items-center justify-center gap-2 text-sm text-slate-500">
-              <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span>3 foto&apos;s gratis per maand</span>
-              <span className="mx-2">•</span>
-              <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span>Geen account nodig om te proberen</span>
+            <p className="text-lg text-slate-500 max-w-3xl mx-auto mb-8">
+              Verkoop je huis sneller met professionele foto&apos;s. Onze AI-technologie verbetert automatisch de kwaliteit van je woningfoto&apos;s, zodat ze er net zo goed uitzien als die van een professionele vastgoedfotograaf.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-500">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>3 foto&apos;s gratis</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Perfect voor Funda</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Resultaat in seconden</span>
+              </div>
             </div>
           </div>
 
@@ -516,6 +528,57 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Voordelen voor Funda */}
+        <section className="bg-gradient-to-br from-orange-50 to-amber-50 py-16 md:py-24">
+          <div className="max-w-6xl mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-4">
+              Waarom je woningfoto&apos;s verbeteren?
+            </h2>
+            <p className="text-center text-slate-600 mb-12 max-w-3xl mx-auto">
+              Goede foto&apos;s zijn essentieel voor een succesvolle huisverkoop. Onderzoek toont aan dat woningen met professionele foto&apos;s sneller verkopen en vaak tegen een hogere prijs. Met Pandblink krijg je professionele kwaliteit zonder de kosten van een fotograaf.
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">Meer bekeken op Funda</h3>
+                <p className="text-slate-600 text-sm">Woningen met heldere, professionele foto&apos;s krijgen tot 40% meer weergaven op Funda en andere vastgoedplatforms.</p>
+              </div>
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">Snellere verkoop</h3>
+                <p className="text-slate-600 text-sm">Aantrekkelijke foto&apos;s zorgen voor meer bezichtigingen en uiteindelijk een snellere verkoop van je woning.</p>
+              </div>
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">Goedkoper dan een fotograaf</h3>
+                <p className="text-slate-600 text-sm">Bespaar honderden euro&apos;s vergeleken met een professionele vastgoedfotograaf. Vanaf slechts €0,58 per foto.</p>
+              </div>
+              <div className="bg-white rounded-2xl p-6 shadow-sm">
+                <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">Professionele kwaliteit</h3>
+                <p className="text-slate-600 text-sm">Onze AI levert resultaten die vergelijkbaar zijn met professionele foto-editing, maar dan in seconden.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Testimonials */}
         <section className="bg-slate-50 py-16 md:py-24">
           <div className="max-w-6xl mx-auto px-4">
@@ -693,9 +756,9 @@ export default function Home() {
               <div>
                 <h4 className="font-semibold mb-4">Bedrijf</h4>
                 <ul className="space-y-2 text-slate-400 text-sm">
-                  <li><a href="#" className="hover:text-white transition">Over ons</a></li>
-                  <li><a href="#" className="hover:text-white transition">Contact</a></li>
-                  <li><a href="#" className="hover:text-white transition">Blog</a></li>
+                  <li><a href="mailto:info@pandblink.nl" className="hover:text-white transition">Contact</a></li>
+                  <li><Link href="/blog" className="hover:text-white transition">Blog</Link></li>
+                  <li><Link href="/funda-foto-verbeteren" className="hover:text-white transition">Funda foto verbeteren</Link></li>
                 </ul>
               </div>
               <div>

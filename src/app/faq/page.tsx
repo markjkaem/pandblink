@@ -2,9 +2,15 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Veelgestelde vragen",
+  title: "Veelgestelde Vragen over Woningfoto Verbetering | Pandblink",
   description:
-    "Antwoorden op veelgestelde vragen over Pandblink's AI foto verbetering service voor woningfotografie.",
+    "Antwoorden op veelgestelde vragen over Pandblink's AI foto verbetering service. Leer hoe je woningfoto's verbetert voor Funda en andere vastgoedplatforms.",
+  keywords: [
+    "funda foto verbeteren",
+    "woningfoto verbeteren faq",
+    "ai foto verbetering vragen",
+    "vastgoedfotografie hulp",
+  ],
 };
 
 const faqs = [
@@ -50,9 +56,27 @@ const faqs = [
   },
 ];
 
+// Generate FAQPage structured data for Google rich snippets
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+
 export default function FAQPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       {/* Header */}
       <header className="bg-white border-b border-slate-100">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">

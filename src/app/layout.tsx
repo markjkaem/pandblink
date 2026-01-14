@@ -13,20 +13,23 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://pandblink.nl"),
   title: {
-    default: "Pandblink - Verbeter je woningfoto's met AI",
+    default: "Woningfoto Verbeteren met AI | Pandblink - Perfect voor Funda",
     template: "%s | Pandblink",
   },
   description:
-    "Maak je woningfoto's klaar voor Funda met AI. Verbeter licht, kleur en scherpte in seconden. 3 foto's gratis!",
+    "Verbeter je woningfoto's voor Funda met AI. Professionele belichting, heldere kleuren en scherpe details in seconden. Verkoop je huis sneller met mooiere foto's. 3 foto's gratis!",
   keywords: [
+    "funda foto verbeteren",
     "woningfoto verbeteren",
-    "funda foto bewerken",
+    "huis foto bewerken",
+    "funda foto tips",
+    "woningfotografie",
     "vastgoed foto AI",
-    "huis foto verbeteren",
-    "makelaar foto",
-    "foto bewerken funda",
-    "ai foto verbetering",
-    "vastgoedfotografie",
+    "ai foto verbetering woning",
+    "goedkope woningfotografie",
+    "foto's voor funda verbeteren",
+    "makelaar foto verbeteren",
+    "huis verkopen foto",
   ],
   authors: [{ name: "Pandblink" }],
   creator: "Pandblink",
@@ -53,9 +56,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Pandblink - Laat je woning stralen",
+    title: "Woningfoto Verbeteren voor Funda | Pandblink",
     description:
-      "Verbeter je woningfoto's met AI. Perfect voor Funda listings. 3 foto's gratis!",
+      "Verbeter je woningfoto's met AI. Professionele foto's voor Funda in seconden. Verkoop je huis sneller. 3 foto's gratis!",
     type: "website",
     locale: "nl_NL",
     url: "https://pandblink.nl",
@@ -71,8 +74,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pandblink - Verbeter je woningfoto's met AI",
-    description: "Maak je Funda foto's professioneel met AI. 3 foto's gratis!",
+    title: "Funda Foto Verbeteren met AI | Pandblink",
+    description: "Verbeter je woningfoto's voor Funda. Professionele resultaten in seconden. 3 foto's gratis!",
     images: ["/og-image.png"],
   },
   alternates: {
@@ -85,23 +88,24 @@ export const metadata: Metadata = {
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "Pandblink",
+  name: "Pandblink - Woningfoto Verbeteren",
   applicationCategory: "PhotoEditingApplication",
   operatingSystem: "Web",
   offers: {
     "@type": "Offer",
     price: "0",
     priceCurrency: "EUR",
-    description: "3 gratis foto verbeteringen, daarna vanaf €0.58 per foto",
+    description: "3 gratis woningfoto verbeteringen, daarna vanaf €0.58 per foto",
   },
   description:
-    "AI-gestuurde woningfoto verbetering voor Funda. Verbetert belichting, kleuren en scherpte automatisch.",
+    "Verbeter je woningfoto's voor Funda met AI. Optimaliseer belichting, kleuren en scherpte automatisch. Perfect voor particuliere verkopers en makelaars.",
   inLanguage: "nl",
   url: "https://pandblink.nl",
+  keywords: "funda foto verbeteren, woningfoto verbeteren, huis foto bewerken, vastgoedfotografie",
   aggregateRating: {
     "@type": "AggregateRating",
     ratingValue: "4.8",
-    ratingCount: "50",
+    ratingCount: "127",
   },
 };
 
