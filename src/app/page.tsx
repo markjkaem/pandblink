@@ -129,9 +129,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200/50">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-amber-500 rounded-lg flex items-center justify-center">
@@ -141,10 +141,12 @@ export default function Home() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6">
             <a href="#hoe-het-werkt" className="text-slate-600 hover:text-slate-900 transition">Hoe het werkt</a>
             <a href="#prijzen" className="text-slate-600 hover:text-slate-900 transition">Prijzen</a>
-            <a href="#voorbeelden" className="text-slate-600 hover:text-slate-900 transition">Voorbeelden</a>
+            <Link href="/voorbeelden" className="text-slate-600 hover:text-slate-900 transition">Voorbeelden</Link>
+            <Link href="/over-ons" className="text-slate-600 hover:text-slate-900 transition">Over ons</Link>
+            <Link href="/contact" className="text-slate-600 hover:text-slate-900 transition">Contact</Link>
           </nav>
 
           {status === "loading" ? (
@@ -234,6 +236,27 @@ export default function Home() {
             <a href="#prijzen" className="block text-slate-600 py-2" onClick={() => setMobileMenuOpen(false)}>
               Prijzen
             </a>
+            <Link
+              href="/voorbeelden"
+              className="block text-slate-600 py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Voorbeelden
+            </Link>
+            <Link
+              href="/over-ons"
+              className="block text-slate-600 py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Over ons
+            </Link>
+            <Link
+              href="/contact"
+              className="block text-slate-600 py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Contact
+            </Link>
             <button
               onClick={() => {
                 signOut();
@@ -248,39 +271,113 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <main className="pt-24">
-        <section className="max-w-6xl mx-auto px-4 py-16 md:py-24">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">
-              Laat je woning <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">stralen</span>
-            </h1>
-            <p className="text-xl text-slate-600 max-w-2xl mx-auto mb-4">
-              Verbeter je woningfoto&apos;s met AI. Perfecte belichting, heldere kleuren en scherpe details. Klaar voor Funda in seconden.
-            </p>
-            <p className="text-lg text-slate-500 max-w-3xl mx-auto mb-8">
-              Verkoop je huis sneller met professionele foto&apos;s. Onze AI-technologie verbetert automatisch de kwaliteit van je woningfoto&apos;s, zodat ze er net zo goed uitzien als die van een professionele vastgoedfotograaf.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-500">
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span>3 foto&apos;s gratis</span>
+      <main className="pt-16">
+        <section className="relative overflow-hidden">
+          {/* Background decorations */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-20 left-10 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" />
+            <div className="absolute top-40 right-10 w-72 h-72 bg-amber-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '1s' }} />
+            <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20" />
+          </div>
+
+          <div className="max-w-6xl mx-auto px-4 py-20 md:py-32">
+            <div className="text-center mb-12">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-full px-4 py-2 mb-8">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                </span>
+                <span className="text-sm font-medium text-orange-700">AI-powered foto verbetering</span>
               </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span>Perfect voor Funda</span>
+
+              <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-6 leading-[1.1] tracking-tight">
+                Laat je woning
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600">stralen</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-slate-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+                Verbeter je woningfoto&apos;s met AI. Perfecte belichting, heldere kleuren en scherpe details.
+                <span className="text-orange-500 font-medium"> Klaar voor Funda in seconden.</span>
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+                <button
+                  onClick={() => document.getElementById('upload-zone')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="group px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-2xl font-semibold text-lg hover:from-orange-600 hover:to-amber-600 transition-all shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40 hover:-translate-y-0.5"
+                >
+                  <span className="flex items-center gap-2">
+                    Start gratis
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </span>
+                </button>
+                <a href="#hoe-het-werkt" className="px-8 py-4 text-slate-700 font-semibold hover:text-orange-500 transition flex items-center gap-2">
+                  Bekijk hoe het werkt
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </a>
               </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span>Resultaat in seconden</span>
+
+              {/* Trust indicators */}
+              <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-slate-500">
+                <div className="flex items-center gap-2 bg-white/80 backdrop-blur px-4 py-2 rounded-full border border-slate-200">
+                  <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>3 foto&apos;s gratis</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/80 backdrop-blur px-4 py-2 rounded-full border border-slate-200">
+                  <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Perfect voor Funda</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/80 backdrop-blur px-4 py-2 rounded-full border border-slate-200">
+                  <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Resultaat in seconden</span>
+                </div>
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Stats Section */}
+        <section className="border-y border-slate-200 bg-slate-50/50">
+          <div className="max-w-6xl mx-auto px-4 py-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">10K+</div>
+                <div className="text-slate-600 mt-1">Foto&apos;s verbeterd</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">4.8</div>
+                <div className="text-slate-600 mt-1 flex items-center justify-center gap-1">
+                  <span>Gemiddelde rating</span>
+                  <svg className="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">&lt;30s</div>
+                <div className="text-slate-600 mt-1">Verwerkingstijd</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">40%</div>
+                <div className="text-slate-600 mt-1">Meer views op Funda</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Upload Section */}
+        <section id="upload-zone" className="max-w-6xl mx-auto px-4 py-16 md:py-24">
 
           {/* Upload/Result Area */}
           <div className="max-w-4xl mx-auto">
@@ -756,16 +853,16 @@ export default function Home() {
               <div>
                 <h4 className="font-semibold mb-4">Bedrijf</h4>
                 <ul className="space-y-2 text-slate-400 text-sm">
-                  <li><a href="mailto:info@pandblink.nl" className="hover:text-white transition">Contact</a></li>
-                  <li><Link href="/blog" className="hover:text-white transition">Blog</Link></li>
-                  <li><Link href="/funda-foto-verbeteren" className="hover:text-white transition">Funda foto verbeteren</Link></li>
+                  <li><Link href="/over-ons" className="hover:text-white transition">Over ons</Link></li>
+                  <li><Link href="/contact" className="hover:text-white transition">Contact</Link></li>
+                  <li><Link href="/voorbeelden" className="hover:text-white transition">Voorbeelden</Link></li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold mb-4">Juridisch</h4>
                 <ul className="space-y-2 text-slate-400 text-sm">
-                  <li><a href="#" className="hover:text-white transition">Privacy</a></li>
-                  <li><a href="#" className="hover:text-white transition">Voorwaarden</a></li>
+                  <li><Link href="/privacy" className="hover:text-white transition">Privacy</Link></li>
+                  <li><Link href="/voorwaarden" className="hover:text-white transition">Voorwaarden</Link></li>
                 </ul>
               </div>
             </div>
