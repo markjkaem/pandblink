@@ -4,6 +4,64 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { checkRateLimit, getClientIP } from "@/lib/rate-limit";
 
+type PresetType = "standard" | "premium" | "crystal";
+
+interface EnhancementOptions {
+  strength?: number;
+  faceEnhance?: boolean;
+}
+
+function getCreditCost(preset: PresetType): number {
+  const costs: Record<PresetType, number> = {
+    standard: 1,
+    premium: 2,
+    crystal: 2,
+  };
+  return costs[preset] || 1;
+}
+
+function getModelConfig(preset: PresetType, options: EnhancementOptions) {
+  // Base config for Real-ESRGAN (standard)
+  const baseConfig = {
+    model: "nightmareai/real-esrgan:f121d640bd286e1fdc67f9799164c1d5be36ff74576ee11c803ae5b665dd46aa",
+    input: {
+      scale: 2,
+      face_enhance: options.faceEnhance || false,
+    },
+  };
+
+  switch (preset) {
+    case "premium":
+      // Magic Image Refiner - higher quality with more contrast
+      return {
+        model: "batouresearch/magic-image-refiner:507ddf6f977a7e30e46c0daefd30de7d563c72322f9e4cf7571f4b10c52ed3f5",
+        input: {
+          image: "",
+          prompt: "enhance this real estate photo, professional quality, sharp details, natural colors",
+          strength: Math.min((options.strength || 100) / 100 * 0.5, 0.75),
+          guidance_scale: 7.5,
+          num_inference_steps: 20,
+        },
+      };
+    case "crystal":
+      // Crystal Clear - best detail and sharpness using SUPIR
+      return {
+        model: "philz1337x/clarity-upscaler:dfad41707589d68ecdccd1dfa600d55a208f9310748e44bfe35b4a6291453d5e",
+        input: {
+          image: "",
+          prompt: "masterpiece, best quality, ultra detailed, sharp focus, professional real estate photography",
+          negative_prompt: "blurry, low quality, artifacts, noise",
+          scale: 2,
+          creativity: 0.35,
+          resemblance: 0.9,
+          num_inference_steps: 18,
+        },
+      };
+    default:
+      return baseConfig;
+  }
+}
+
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
   useFileOutput: false, // Return plain URLs instead of FileOutput objects
@@ -48,15 +106,38 @@ export async function POST(request: NextRequest) {
       select: { credits: true },
     });
 
-    if (!user || user.credits <= 0) {
+    const formData = await request.formData();
+    const file = formData.get("image") as File;
+    const presetRaw = formData.get("preset") as string | null;
+    const optionsRaw = formData.get("options") as string | null;
+
+    // Parse preset and options
+    const preset: PresetType = (presetRaw === "premium" || presetRaw === "crystal")
+      ? presetRaw
+      : "standard";
+
+    let options: EnhancementOptions = {};
+    try {
+      if (optionsRaw) {
+        options = JSON.parse(optionsRaw);
+      }
+    } catch {
+      // Use default options if parsing fails
+    }
+
+    const creditCost = getCreditCost(preset);
+
+    if (!user || user.credits < creditCost) {
       return NextResponse.json(
-        { error: "Je hebt geen credits meer. Koop meer credits om door te gaan.", noCredits: true },
+        {
+          error: `Je hebt niet genoeg credits. Deze verbetering kost ${creditCost} credit${creditCost > 1 ? "s" : ""}.`,
+          noCredits: true,
+          required: creditCost,
+          available: user?.credits || 0,
+        },
         { status: 402 }
       );
     }
-
-    const formData = await request.formData();
-    const file = formData.get("image") as File;
 
     if (!file) {
       return NextResponse.json(
@@ -72,14 +153,16 @@ export async function POST(request: NextRequest) {
     const mimeType = file.type || "image/jpeg";
     const dataUrl = `data:${mimeType};base64,${base64}`;
 
-    // Use Real-ESRGAN for image enhancement
+    // Get model config based on preset
+    const modelConfig = getModelConfig(preset, options);
+
+    // Run enhancement with the appropriate model
     const output = await replicate.run(
-      "nightmareai/real-esrgan:f121d640bd286e1fdc67f9799164c1d5be36ff74576ee11c803ae5b665dd46aa",
+      modelConfig.model as `${string}/${string}:${string}`,
       {
         input: {
+          ...modelConfig.input,
           image: dataUrl,
-          scale: 2,
-          face_enhance: false,
         },
       }
     );
@@ -158,13 +241,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Deduct credit after successful enhancement
+    // Deduct credits after successful enhancement
     await prisma.user.update({
       where: { id: session.user.id },
-      data: { credits: { decrement: 1 } },
+      data: { credits: { decrement: creditCost } },
     });
 
-    // Log usage with history data
+    // Log usage with history data and enhancement options
     await prisma.usage.create({
       data: {
         userId: session.user.id,
@@ -172,6 +255,9 @@ export async function POST(request: NextRequest) {
         originalSize: file.size,
         enhancedImageUrl: enhancedImageUrl,
         originalFileName: file.name || "foto.jpg",
+        preset: preset,
+        creditsCost: creditCost,
+        options: Object.keys(options).length > 0 ? JSON.parse(JSON.stringify(options)) : undefined,
       },
     });
 
@@ -179,7 +265,9 @@ export async function POST(request: NextRequest) {
       success: true,
       enhancedImageUrl,
       message: "Foto succesvol verbeterd!",
-      remainingCredits: user.credits - 1,
+      remainingCredits: user.credits - creditCost,
+      preset,
+      creditsCost: creditCost,
     });
   } catch (error) {
     console.error("Enhancement error:", error);

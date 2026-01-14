@@ -85,6 +85,11 @@ model Usage {
   imageWidth        Int?      // Breedte van de foto
   imageHeight       Int?      // Hoogte van de foto
 
+  // Enhancement opties (nieuw)
+  preset       String?   // "standard", "premium", "crystal"
+  creditsCost  Int       @default(1)  // Aantal credits gebruikt
+  options      Json?     // Enhancement opties (strength, faceEnhance, etc.)
+
   // Metadata voor purchases (om dubbele credits te voorkomen)
   stripeSessionId String?  @unique
   creditsAdded    Int?
