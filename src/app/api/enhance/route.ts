@@ -23,44 +23,58 @@ function getCreditCost(preset: PresetType): number {
 function getModelConfig(preset: PresetType, options: EnhancementOptions) {
   switch (preset) {
     case "standard":
-      // Recraft Crisp - scherp en professioneel, duidelijk zichtbaar verschil
-      return {
-        model: "recraft-ai/recraft-crisp-upscale:31c70d9026bbd25ee2b751825e19101e0321b8814c33863c88fe5d0d63c00c82",
-        input: {},
-      };
-    case "premium":
-      // Magic Image Refiner - textuur, diepte, levendige kleuren
-      return {
-        model: "fermatresearch/magic-image-refiner:507ddf6f977a7e30e46c0daefd30de7d563c72322f9e4cf7cbac52ef0f667b13",
-        input: {
-          prompt: "professional real estate photography, bright natural lighting, vibrant colors, sharp details, HDR",
-          negative_prompt: "dark, blurry, low quality, artifacts, noise, overexposed",
-          hdr: 0.3,
-          creativity: 0.3,
-          resemblance: 0.75,
-          resolution: "original",
-          steps: 20,
-          guidance_scale: 7,
-        },
-      };
-    case "crystal":
-      // Crystal Clear - AI-gestuurde detail enhancement met hogere creativity
+      // Clarity Upscaler - zichtbare verbetering in kleuren en scherpte
       return {
         model: "philz1337x/clarity-upscaler:dfad41707589d68ecdccd1dfa600d55a208f9310748e44bfe35b4a6291453d5e",
         input: {
-          prompt: "professional real estate photo, HDR, bright natural lighting, sharp details, vivid colors, high quality interior photography",
-          negative_prompt: "dark, blurry, low quality, artifacts, noise, underexposed, grainy",
+          prompt: "professional real estate photo, bright natural lighting, enhanced colors, sharp details, clean image",
+          negative_prompt: "dark, blurry, low quality, artifacts, noise, underexposed",
           scale: 2,
+          creativity: 0.35,
+          resemblance: 0.85,
+          num_inference_steps: 18,
+        },
+      };
+    case "premium":
+      // Magic Image Refiner - sterke HDR en levendige kleuren
+      return {
+        model: "fermatresearch/magic-image-refiner:507ddf6f977a7e30e46c0daefd30de7d563c72322f9e4cf7cbac52ef0f667b13",
+        input: {
+          prompt: "professional real estate photography, bright natural lighting, vibrant saturated colors, sharp details, strong HDR effect, magazine quality",
+          negative_prompt: "dark, blurry, low quality, artifacts, noise, overexposed, dull colors, flat lighting",
+          hdr: 0.5,
           creativity: 0.45,
-          resemblance: 0.8,
-          num_inference_steps: 20,
+          resemblance: 0.65,
+          resolution: "original",
+          steps: 22,
+          guidance_scale: 8,
+        },
+      };
+    case "crystal":
+      // Crystal Clear - maximale AI verbetering, duidelijk zichtbaar verschil
+      return {
+        model: "philz1337x/clarity-upscaler:dfad41707589d68ecdccd1dfa600d55a208f9310748e44bfe35b4a6291453d5e",
+        input: {
+          prompt: "professional real estate photo, strong HDR, bright natural lighting, ultra sharp details, vivid vibrant colors, magazine quality photography",
+          negative_prompt: "dark, blurry, low quality, artifacts, noise, underexposed, grainy, dull, flat",
+          scale: 2,
+          creativity: 0.55,
+          resemblance: 0.7,
+          num_inference_steps: 24,
         },
       };
     default:
       // Fallback to standard
       return {
-        model: "recraft-ai/recraft-crisp-upscale:31c70d9026bbd25ee2b751825e19101e0321b8814c33863c88fe5d0d63c00c82",
-        input: {},
+        model: "philz1337x/clarity-upscaler:dfad41707589d68ecdccd1dfa600d55a208f9310748e44bfe35b4a6291453d5e",
+        input: {
+          prompt: "professional real estate photo, bright natural lighting, enhanced colors, sharp details",
+          negative_prompt: "dark, blurry, low quality, artifacts, noise",
+          scale: 2,
+          creativity: 0.35,
+          resemblance: 0.85,
+          num_inference_steps: 18,
+        },
       };
   }
 }
