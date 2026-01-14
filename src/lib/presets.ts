@@ -19,18 +19,18 @@ export const PRESET_INFO: Record<PresetType, {
 }> = {
   standard: {
     name: "Standaard",
-    description: "Snelle verbetering met goede kwaliteit",
+    description: "Scherp en professioneel",
     credits: 1,
   },
   premium: {
     name: "Premium",
-    description: "Hogere kwaliteit met meer contrast",
+    description: "Levendige kleuren, HDR effect",
     credits: 2,
     badge: "Populair",
   },
   crystal: {
     name: "Crystal Clear",
-    description: "Beste detail en scherpte",
+    description: "Maximale detail & scherpte",
     credits: 2,
     badge: "Pro",
   },

@@ -1,61 +1,29 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Voorbeelden van Foto Verbetering | Pandblink",
-  description:
-    "Bekijk voor- en na-voorbeelden van woningfoto's verbeterd met Pandblink AI. Zie het verschil dat professionele belichting en kleuren maken.",
-  keywords: [
-    "woningfoto voorbeelden",
-    "voor en na foto verbetering",
-    "funda foto voorbeelden",
-    "ai foto resultaten",
-  ],
-};
+import Link from "next/link";
+import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 
 const examples = [
   {
     id: 1,
-    title: "Woonkamer",
-    description: "Donkere woonkamer getransformeerd naar lichte, uitnodigende ruimte",
-    before: "/examples/woonkamer-voor.jpg",
-    after: "/examples/woonkamer-na.jpg",
+    title: "Moderne woning",
+    description: "Verbeterde belichting en levendige kleuren",
+    before: "/examples/huis-1.jpg",
+    after: "/examples/huis-1-enhanced.jpg",
   },
   {
     id: 2,
-    title: "Keuken",
-    description: "Kleurloze keuken met verbeterde warmte en helderheid",
-    before: "/examples/keuken-voor.jpg",
-    after: "/examples/keuken-na.jpg",
+    title: "Stadswoning",
+    description: "Scherpere details en natuurlijke tinten",
+    before: "/examples/huis-2.webp",
+    after: "/examples/huis-2-enhanced.webp",
   },
   {
     id: 3,
-    title: "Slaapkamer",
-    description: "Onderbelichte slaapkamer met geoptimaliseerde belichting",
-    before: "/examples/slaapkamer-voor.jpg",
-    after: "/examples/slaapkamer-na.jpg",
-  },
-  {
-    id: 4,
-    title: "Badkamer",
-    description: "Geelachtige tint gecorrigeerd naar natuurlijke kleuren",
-    before: "/examples/badkamer-voor.jpg",
-    after: "/examples/badkamer-na.jpg",
-  },
-  {
-    id: 5,
-    title: "Tuin",
-    description: "Bewolkte tuin omgetoverd naar zonnige buitenruimte",
-    before: "/examples/tuin-voor.jpg",
-    after: "/examples/tuin-na.jpg",
-  },
-  {
-    id: 6,
-    title: "Exterieur",
-    description: "Gevelaanzicht met verbeterde scherpte en contrast",
-    before: "/examples/exterieur-voor.jpg",
-    after: "/examples/exterieur-na.jpg",
+    title: "Vrijstaand huis",
+    description: "Professionele uitstraling voor Funda",
+    before: "/examples/huis-3.webp",
+    after: "/examples/huis-3-enhanced.webp",
   },
 ];
 
@@ -85,43 +53,26 @@ export default function VoorbeeldenPage() {
           Voorbeelden
         </h1>
         <p className="text-slate-600 text-center mb-4 max-w-2xl mx-auto">
-          Bekijk het verschil dat Pandblink AI maakt. Vergelijk de originele
-          foto&apos;s met de verbeterde versies.
+          Bekijk het verschil dat Pandblink AI maakt. Sleep de slider om de
+          originele en verbeterde foto&apos;s te vergelijken.
         </p>
         <p className="text-sm text-slate-500 text-center mb-12">
-          Beweeg je muis over de foto&apos;s om het voor/na effect te zien
+          Klik op het vergrootglas voor volledig scherm
         </p>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {examples.map((example) => (
             <div
               key={example.id}
               className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden"
             >
-              <div className="relative aspect-[4/3] group cursor-pointer">
-                {/* Before image (shown by default) */}
-                <Image
-                  src={example.before}
-                  alt={`${example.title} - voor`}
-                  fill
-                  className="object-cover transition-opacity duration-300 group-hover:opacity-0"
-                  sizes="(max-width: 768px) 100vw, 50vw"
+              <div className="aspect-[4/3]">
+                <BeforeAfterSlider
+                  beforeImage={example.before}
+                  afterImage={example.after}
+                  beforeLabel="Voor"
+                  afterLabel="Na"
                 />
-                {/* After image (shown on hover) */}
-                <Image
-                  src={example.after}
-                  alt={`${example.title} - na`}
-                  fill
-                  className="object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                {/* Labels */}
-                <div className="absolute top-3 left-3 bg-slate-900/70 text-white text-xs font-medium px-2 py-1 rounded transition-opacity duration-300 group-hover:opacity-0">
-                  VOOR
-                </div>
-                <div className="absolute top-3 left-3 bg-orange-500 text-white text-xs font-medium px-2 py-1 rounded opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  NA
-                </div>
               </div>
               <div className="p-5">
                 <h3 className="font-semibold text-slate-900 mb-1">
@@ -133,25 +84,15 @@ export default function VoorbeeldenPage() {
           ))}
         </div>
 
-        {/* Placeholder notice */}
-        <div className="mt-12 bg-amber-50 border border-amber-200 rounded-xl p-6 text-center">
-          <p className="text-amber-800 text-sm">
-            <strong>Let op:</strong> De voorbeeldafbeeldingen worden binnenkort
-            toegevoegd. Plaats je eigen afbeeldingen in{" "}
-            <code className="bg-amber-100 px-1 rounded">/public/examples/</code>{" "}
-            met de bestandsnamen zoals hierboven aangegeven.
-          </p>
-        </div>
-
         {/* Stats section */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
           <div className="text-center">
-            <div className="text-3xl font-bold text-orange-500 mb-1">3 sec</div>
+            <div className="text-3xl font-bold text-orange-500 mb-1">&lt;30s</div>
             <div className="text-sm text-slate-600">Verwerkingstijd</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-orange-500 mb-1">4x</div>
-            <div className="text-sm text-slate-600">Scherpere details</div>
+            <div className="text-3xl font-bold text-orange-500 mb-1">HDR</div>
+            <div className="text-sm text-slate-600">Effect toevoegen</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-orange-500 mb-1">100%</div>

@@ -21,44 +21,47 @@ function getCreditCost(preset: PresetType): number {
 }
 
 function getModelConfig(preset: PresetType, options: EnhancementOptions) {
-  // Base config for Real-ESRGAN (standard)
-  const baseConfig = {
-    model: "nightmareai/real-esrgan:f121d640bd286e1fdc67f9799164c1d5be36ff74576ee11c803ae5b665dd46aa",
-    input: {
-      scale: 2,
-      face_enhance: options.faceEnhance || false,
-    },
-  };
-
   switch (preset) {
-    case "premium":
-      // Magic Image Refiner - higher quality with more contrast
+    case "standard":
+      // Recraft Crisp - scherp en professioneel, duidelijk zichtbaar verschil
       return {
-        model: "batouresearch/magic-image-refiner:507ddf6f977a7e30e46c0daefd30de7d563c72322f9e4cf7571f4b10c52ed3f5",
+        model: "recraft-ai/recraft-crisp-upscale:31c70d9026bbd25ee2b751825e19101e0321b8814c33863c88fe5d0d63c00c82",
+        input: {},
+      };
+    case "premium":
+      // Magic Image Refiner - textuur, diepte, levendige kleuren
+      return {
+        model: "fermatresearch/magic-image-refiner:507ddf6f977a7e30e46c0daefd30de7d563c72322f9e4cf7cbac52ef0f667b13",
         input: {
-          image: "",
-          prompt: "enhance this real estate photo, professional quality, sharp details, natural colors",
-          strength: Math.min((options.strength || 100) / 100 * 0.5, 0.75),
-          guidance_scale: 7.5,
-          num_inference_steps: 20,
+          prompt: "professional real estate photography, bright natural lighting, vibrant colors, sharp details, HDR",
+          negative_prompt: "dark, blurry, low quality, artifacts, noise, overexposed",
+          hdr: 0.3,
+          creativity: 0.3,
+          resemblance: 0.75,
+          resolution: "original",
+          steps: 20,
+          guidance_scale: 7,
         },
       };
     case "crystal":
-      // Crystal Clear - best detail and sharpness using SUPIR
+      // Crystal Clear - AI-gestuurde detail enhancement met hogere creativity
       return {
         model: "philz1337x/clarity-upscaler:dfad41707589d68ecdccd1dfa600d55a208f9310748e44bfe35b4a6291453d5e",
         input: {
-          image: "",
-          prompt: "masterpiece, best quality, ultra detailed, sharp focus, professional real estate photography",
-          negative_prompt: "blurry, low quality, artifacts, noise",
+          prompt: "professional real estate photo, HDR, bright natural lighting, sharp details, vivid colors, high quality interior photography",
+          negative_prompt: "dark, blurry, low quality, artifacts, noise, underexposed, grainy",
           scale: 2,
-          creativity: 0.35,
-          resemblance: 0.9,
-          num_inference_steps: 18,
+          creativity: 0.45,
+          resemblance: 0.8,
+          num_inference_steps: 20,
         },
       };
     default:
-      return baseConfig;
+      // Fallback to standard
+      return {
+        model: "recraft-ai/recraft-crisp-upscale:31c70d9026bbd25ee2b751825e19101e0321b8814c33863c88fe5d0d63c00c82",
+        input: {},
+      };
   }
 }
 
