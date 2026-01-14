@@ -36,10 +36,11 @@ npx prisma db push   # Push schema changes (dev only)
 npx prisma generate  # Regenerate Prisma client
 
 # Testing with Playwright
-npx playwright test              # Run all tests
-npx playwright test --ui         # Open Playwright UI
-npx playwright test --headed     # Run with visible browser
+npm run test                     # Run all tests
+npm run test:ui                  # Open Playwright UI
+npm run test:headed              # Run with visible browser
 npx playwright codegen           # Generate tests by recording
+npx playwright install chromium  # Install browser (first time)
 
 # Git (always type-check before pushing!)
 npx tsc --noEmit && git add . && git commit -m "message" && git push origin master
@@ -138,23 +139,23 @@ Vercel auto-deploys from `master` branch. Build command includes `prisma generat
 5. Verify sitemap at /sitemap.xml
 6. Test OG image with Facebook debugger
 
-## Playwright Test Setup
+## Playwright Tests
 
-```typescript
-// tests/example.spec.ts
-import { test, expect } from '@playwright/test';
+Tests are in `tests/` directory:
+- `pages.spec.ts` - Page loading, navigation, SEO meta tags
+- `upload.spec.ts` - File upload, preview, cookie consent
 
-test('homepage loads', async ({ page }) => {
-  await page.goto('/');
-  await expect(page.getByRole('heading', { name: /stralen/i })).toBeVisible();
-});
+```bash
+# First time setup
+npx playwright install chromium
 
-test('can navigate to FAQ', async ({ page }) => {
-  await page.goto('/');
-  await page.getByRole('link', { name: /veelgestelde vragen/i }).click();
-  await expect(page).toHaveURL('/faq');
-});
+# Run tests
+npm run test          # Headless
+npm run test:ui       # Interactive UI
+npm run test:headed   # See browser
 ```
+
+Tests auto-start dev server via `playwright.config.ts`.
 
 ## Common Issues
 
