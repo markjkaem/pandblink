@@ -377,248 +377,360 @@ export default function Home() {
         </section>
 
         {/* Upload Section */}
-        <section id="upload-zone" className="max-w-6xl mx-auto px-4 py-16 md:py-24">
+        <section id="upload-zone" className="relative py-16 md:py-24">
+          <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/50 to-white -z-10" />
 
-          {/* Upload/Result Area */}
-          <div className="max-w-4xl mx-auto">
-            {enhancedImage && typeof enhancedImage === "string" ? (
-              /* Before/After Comparison */
-              <div className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  {/* Original */}
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium text-slate-500 text-center">Origineel</div>
-                    <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
-                      {preview && (
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                Upload je foto
+              </h2>
+              <p className="text-lg text-slate-600 max-w-xl mx-auto">
+                Sleep je woningfoto hieronder of klik om een bestand te selecteren
+              </p>
+            </div>
+
+            {/* Upload/Result Area */}
+            <div className="max-w-4xl mx-auto">
+              {enhancedImage && typeof enhancedImage === "string" ? (
+                /* Before/After Comparison */
+                <div className="space-y-8">
+                  <div className="grid md:grid-cols-2 gap-8">
+                    {/* Original */}
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-center gap-2 text-sm font-medium text-slate-500">
+                        <div className="w-2 h-2 rounded-full bg-slate-400" />
+                        Origineel
+                      </div>
+                      <div className="relative aspect-video rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shadow-sm">
+                        {preview && (
+                          <Image
+                            src={preview}
+                            alt="Origineel"
+                            fill
+                            className="object-contain"
+                            unoptimized
+                          />
+                        )}
+                      </div>
+                    </div>
+                    {/* Enhanced */}
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-center gap-2 text-sm font-medium text-orange-500">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Verbeterd met AI
+                      </div>
+                      <div className="relative aspect-video rounded-2xl overflow-hidden bg-slate-100 ring-2 ring-orange-500 ring-offset-2 shadow-lg shadow-orange-500/10">
                         <Image
-                          src={preview}
-                          alt="Origineel"
+                          src={enhancedImage}
+                          alt="Verbeterd"
                           fill
                           className="object-contain"
                           unoptimized
                         />
-                      )}
+                      </div>
                     </div>
                   </div>
-                  {/* Enhanced */}
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium text-orange-500 text-center flex items-center justify-center gap-1">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                    <button
+                      onClick={resetAll}
+                      className="px-6 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition font-medium shadow-sm"
+                    >
+                      Nieuwe foto uploaden
+                    </button>
+                    <button
+                      onClick={handleDownload}
+                      className="px-6 py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl hover:from-orange-600 hover:to-amber-600 transition font-medium flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
-                      Verbeterd
-                    </div>
-                    <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-100 border-2 border-orange-500">
-                      <Image
-                        src={enhancedImage}
-                        alt="Verbeterd"
-                        fill
-                        className="object-contain"
-                        unoptimized
-                      />
-                    </div>
+                      Download verbeterde foto
+                    </button>
                   </div>
                 </div>
-                <div className="flex gap-4 justify-center">
-                  <button
-                    onClick={resetAll}
-                    className="px-6 py-3 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 transition font-medium"
-                  >
-                    Nieuwe foto
-                  </button>
-                  <button
-                    onClick={handleDownload}
-                    className="px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 transition font-medium flex items-center gap-2"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    Download verbeterde foto
-                  </button>
-                </div>
-              </div>
-            ) : (
-              /* Upload Area */
-              <div
-                className={`relative border-2 border-dashed rounded-2xl p-8 md:p-12 text-center transition-all ${
-                  dragActive
-                    ? "border-orange-500 bg-orange-50"
-                    : "border-slate-300 hover:border-orange-400 hover:bg-slate-50"
-                }`}
-                onDragEnter={handleDrag}
-                onDragLeave={handleDrag}
-                onDragOver={handleDrag}
-                onDrop={handleDrop}
-              >
-                {preview ? (
-                  <div className="space-y-4">
-                    <div className="relative aspect-video rounded-lg overflow-hidden bg-slate-100 max-w-2xl mx-auto">
-                      <Image
-                        src={preview}
-                        alt="Preview"
-                        fill
-                        className="object-contain"
-                        unoptimized
-                      />
-                    </div>
-                    {error && (
-                      <div className="bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm">
-                        {error}
-                      </div>
-                    )}
-                    <div className="flex gap-4 justify-center">
-                      <button
-                        onClick={resetAll}
-                        disabled={isEnhancing}
-                        className="px-6 py-3 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 transition font-medium disabled:opacity-50"
-                      >
-                        Andere foto
-                      </button>
-                      {session ? (
-                        <button
-                          onClick={handleEnhance}
-                          disabled={isEnhancing}
-                          className="px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 transition font-medium flex items-center gap-2 disabled:opacity-50"
-                        >
-                          {isEnhancing ? (
-                            <>
-                              <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                              </svg>
-                              Bezig met verbeteren...
-                            </>
+              ) : (
+                /* Upload Area */
+                <div
+                  className={`group relative rounded-3xl p-1 transition-all duration-300 ${
+                    dragActive
+                      ? "bg-gradient-to-r from-orange-500 to-amber-500"
+                      : "bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 hover:from-orange-400 hover:via-amber-400 hover:to-orange-400"
+                  }`}
+                  onDragEnter={handleDrag}
+                  onDragLeave={handleDrag}
+                  onDragOver={handleDrag}
+                  onDrop={handleDrop}
+                >
+                  <div className={`bg-white rounded-[22px] p-8 md:p-12 text-center transition-all ${
+                    dragActive ? "bg-orange-50/50" : ""
+                  }`}>
+                    {preview ? (
+                      <div className="space-y-6">
+                        <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-100 max-w-2xl mx-auto border border-slate-200 shadow-inner">
+                          <Image
+                            src={preview}
+                            alt="Preview"
+                            fill
+                            className="object-contain"
+                            unoptimized
+                          />
+                        </div>
+                        {error && (
+                          <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-sm flex items-center justify-center gap-2 max-w-md mx-auto">
+                            <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            {error}
+                          </div>
+                        )}
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
+                          <button
+                            onClick={resetAll}
+                            disabled={isEnhancing}
+                            className="px-6 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition font-medium disabled:opacity-50 shadow-sm"
+                          >
+                            Andere foto
+                          </button>
+                          {session ? (
+                            <button
+                              onClick={handleEnhance}
+                              disabled={isEnhancing}
+                              className="px-6 py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl hover:from-orange-600 hover:to-amber-600 transition font-medium flex items-center justify-center gap-2 disabled:opacity-50 shadow-lg shadow-orange-500/25"
+                            >
+                              {isEnhancing ? (
+                                <>
+                                  <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                  </svg>
+                                  Bezig met verbeteren...
+                                </>
+                              ) : (
+                                <>
+                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                  </svg>
+                                  Verbeter foto ({credits ?? session.user?.credits ?? 0} credits)
+                                </>
+                              )}
+                            </button>
                           ) : (
-                            <>
+                            <Link
+                              href="/login"
+                              className="px-6 py-3.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl hover:from-orange-600 hover:to-amber-600 transition font-medium flex items-center justify-center gap-2 shadow-lg shadow-orange-500/25"
+                            >
                               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                               </svg>
-                              Verbeter foto ({credits ?? session.user?.credits ?? 0} credits)
-                            </>
+                              Log in om te verbeteren
+                            </Link>
                           )}
-                        </button>
-                      ) : (
-                        <Link
-                          href="/login"
-                          className="px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg hover:from-orange-600 hover:to-amber-600 transition font-medium flex items-center gap-2"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                          </svg>
-                          Log in om te verbeteren
-                        </Link>
-                      )}
-                    </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleFileSelect}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                        />
+                        <div className="space-y-6">
+                          <div className="w-20 h-20 mx-auto bg-gradient-to-br from-orange-100 to-amber-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <svg className="w-10 h-10 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                          <div>
+                            <p className="text-xl font-semibold text-slate-900 mb-2">
+                              Sleep je woningfoto hierheen
+                            </p>
+                            <p className="text-slate-500">
+                              of <span className="text-orange-500 font-semibold cursor-pointer hover:text-orange-600 transition">klik om te selecteren</span>
+                            </p>
+                          </div>
+                          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-400 pt-2">
+                            <span className="flex items-center gap-1.5">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              JPG, PNG, WebP
+                            </span>
+                            <span className="flex items-center gap-1.5">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              Max 10MB
+                            </span>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
-                ) : (
-                  <>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileSelect}
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                    />
-                    <div className="space-y-4">
-                      <div className="w-16 h-16 mx-auto bg-gradient-to-br from-orange-100 to-amber-100 rounded-2xl flex items-center justify-center">
-                        <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="text-lg font-medium text-slate-900">
-                          Sleep je woningfoto hierheen
-                        </p>
-                        <p className="text-slate-500 mt-1">
-                          of <span className="text-orange-500 font-medium">klik om te selecteren</span>
-                        </p>
-                      </div>
-                      <p className="text-sm text-slate-400">
-                        JPG, PNG of WebP • Max 10MB
-                      </p>
-                    </div>
-                  </>
-                )}
-              </div>
-            )}
+                </div>
+              )}
+            </div>
           </div>
         </section>
 
         {/* How it Works */}
-        <section id="hoe-het-werkt" className="bg-slate-50 py-16 md:py-24">
+        <section id="hoe-het-werkt" className="relative bg-slate-50 py-16 md:py-24 overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-px bg-gradient-to-r from-transparent via-orange-300 to-transparent" />
+
           <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-12">
-              Zo werkt het
-            </h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  step: "1",
-                  title: "Upload je foto",
-                  description: "Sleep je woningfoto naar de upload zone of selecteer een bestand.",
-                  icon: (
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                    </svg>
-                  ),
-                },
-                {
-                  step: "2",
-                  title: "AI verbetert automatisch",
-                  description: "Onze AI optimaliseert belichting, kleuren en scherpte in seconden.",
-                  icon: (
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  ),
-                },
-                {
-                  step: "3",
-                  title: "Download & gebruik",
-                  description: "Download je verbeterde foto en upload naar Funda of je makelaar.",
-                  icon: (
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                  ),
-                },
-              ].map((item) => (
-                <div key={item.step} className="bg-white rounded-2xl p-8 shadow-sm">
-                  <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-xl flex items-center justify-center text-white mb-6">
-                    {item.icon}
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-2 mb-6 shadow-sm">
+                <span className="text-sm font-medium text-slate-600">Eenvoudig proces</span>
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
+                Zo werkt het
+              </h2>
+              <p className="text-lg text-slate-600 max-w-xl mx-auto">
+                In drie simpele stappen naar professionele woningfoto&apos;s
+              </p>
+            </div>
+
+            <div className="relative">
+              {/* Connecting line - hidden on mobile */}
+              <div className="hidden md:block absolute top-24 left-1/2 -translate-x-1/2 w-2/3 h-0.5 bg-gradient-to-r from-orange-200 via-orange-300 to-orange-200" />
+
+              <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+                {[
+                  {
+                    step: "1",
+                    title: "Upload je foto",
+                    description: "Sleep je woningfoto naar de upload zone of selecteer een bestand van je computer.",
+                    icon: (
+                      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    step: "2",
+                    title: "AI verbetert automatisch",
+                    description: "Onze AI optimaliseert belichting, kleuren en scherpte binnen 30 seconden.",
+                    icon: (
+                      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    step: "3",
+                    title: "Download & gebruik",
+                    description: "Download je verbeterde foto en upload direct naar Funda of stuur naar je makelaar.",
+                    icon: (
+                      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                    ),
+                  },
+                ].map((item, index) => (
+                  <div key={item.step} className="relative">
+                    <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 hover:shadow-lg hover:border-orange-200 transition-all duration-300 h-full">
+                      {/* Step number badge */}
+                      <div className="absolute -top-4 left-8 w-8 h-8 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-orange-500/30">
+                        {item.step}
+                      </div>
+                      <div className="w-14 h-14 bg-gradient-to-br from-orange-100 to-amber-100 rounded-2xl flex items-center justify-center text-orange-500 mb-6 mt-2">
+                        {item.icon}
+                      </div>
+                      <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
+                      <p className="text-slate-600 leading-relaxed">{item.description}</p>
+                    </div>
+                    {/* Arrow between cards - hidden on mobile */}
+                    {index < 2 && (
+                      <div className="hidden md:flex absolute top-1/2 -right-6 transform -translate-y-1/2 z-10">
+                        <div className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center border border-slate-100">
+                          <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="text-sm font-medium text-orange-500 mb-2">Stap {item.step}</div>
-                  <h3 className="text-xl font-semibold text-slate-900 mb-2">{item.title}</h3>
-                  <p className="text-slate-600">{item.description}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
         {/* Features */}
-        <section className="py-16 md:py-24">
-          <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-4">
-              Wat we verbeteren
-            </h2>
-            <p className="text-center text-slate-600 mb-12 max-w-2xl mx-auto">
-              Subtiele, professionele verbeteringen die je foto&apos;s laten stralen zonder ze onrealistisch te maken.
-            </p>
+        <section className="py-16 md:py-24 relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute top-40 -right-40 w-80 h-80 bg-orange-100 rounded-full opacity-30 blur-3xl" />
+          <div className="absolute bottom-20 -left-40 w-80 h-80 bg-amber-100 rounded-full opacity-30 blur-3xl" />
+
+          <div className="max-w-6xl mx-auto px-4 relative">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-full px-4 py-2 mb-6">
+                <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                </svg>
+                <span className="text-sm font-medium text-orange-700">AI Verbeteringen</span>
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
+                Wat we verbeteren
+              </h2>
+              <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                Subtiele, professionele verbeteringen die je foto&apos;s laten stralen zonder ze onrealistisch te maken.
+              </p>
+            </div>
+
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { title: "Belichting", description: "Donkere hoeken en kamers worden opgehelderd" },
-                { title: "Kleuren", description: "Natuurlijke, levendige kleuren die uitnodigen" },
-                { title: "Scherpte", description: "Scherpe details zonder overdreven effecten" },
-                { title: "Witbalans", description: "Witte muren blijven wit, geen gele tint" },
-              ].map((feature) => (
-                <div key={feature.title} className="text-center p-6">
-                  <div className="w-12 h-12 mx-auto bg-orange-100 rounded-xl flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                {
+                  title: "Belichting",
+                  description: "Donkere hoeken en kamers worden opgehelderd voor een lichtere sfeer",
+                  icon: (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
+                  ),
+                },
+                {
+                  title: "Kleuren",
+                  description: "Natuurlijke, levendige kleuren die uitnodigen en realistisch blijven",
+                  icon: (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                  ),
+                },
+                {
+                  title: "Scherpte",
+                  description: "Scherpe details zonder overdreven effecten of ruis",
+                  icon: (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  ),
+                },
+                {
+                  title: "Witbalans",
+                  description: "Witte muren blijven wit, geen gele tint of verkleuring",
+                  icon: (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                    </svg>
+                  ),
+                },
+              ].map((feature, index) => (
+                <div
+                  key={feature.title}
+                  className="group bg-white rounded-2xl p-6 border border-slate-100 hover:border-orange-200 hover:shadow-xl hover:shadow-orange-500/5 transition-all duration-300"
+                >
+                  <div className="w-14 h-14 bg-gradient-to-br from-orange-100 to-amber-100 rounded-2xl flex items-center justify-center mb-5 text-orange-500 group-hover:scale-110 transition-transform duration-300">
+                    {feature.icon}
                   </div>
-                  <h3 className="font-semibold text-slate-900 mb-2">{feature.title}</h3>
-                  <p className="text-sm text-slate-600">{feature.description}</p>
+                  <h3 className="text-lg font-bold text-slate-900 mb-2">{feature.title}</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -677,41 +789,75 @@ export default function Home() {
         </section>
 
         {/* Testimonials */}
-        <section className="bg-slate-50 py-16 md:py-24">
-          <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-12">
-              Wat klanten zeggen
-            </h2>
+        <section className="bg-slate-50 py-16 md:py-24 relative overflow-hidden">
+          {/* Quote decoration */}
+          <div className="absolute top-20 left-10 text-slate-200/50 text-[200px] font-serif leading-none select-none">&ldquo;</div>
+
+          <div className="max-w-6xl mx-auto px-4 relative">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-2 mb-6 shadow-sm">
+                <svg className="w-4 h-4 text-amber-500 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+                <span className="text-sm font-medium text-slate-600">Klant reviews</span>
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
+                Wat klanten zeggen
+              </h2>
+              <p className="text-lg text-slate-600 max-w-xl mx-auto">
+                Ontdek waarom duizenden gebruikers kiezen voor Pandblink
+              </p>
+            </div>
+
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
-                  quote: "Mijn Funda listing kreeg 40% meer views na het gebruik van Pandblink!",
+                  quote: "Mijn Funda listing kreeg 40% meer views na het gebruik van Pandblink! De foto's zien er nu echt professioneel uit.",
                   author: "Mark V.",
                   role: "Particuliere verkoper",
+                  initials: "MV",
+                  color: "from-blue-500 to-indigo-500",
                 },
                 {
-                  quote: "Eindelijk professionele foto's zonder dure fotograaf. Super makkelijk!",
+                  quote: "Eindelijk professionele foto's zonder dure fotograaf. Super makkelijk en het resultaat is geweldig!",
                   author: "Lisa B.",
                   role: "Makelaar",
+                  initials: "LB",
+                  color: "from-orange-500 to-amber-500",
                 },
                 {
-                  quote: "De AI verbetert precies wat nodig is. Natuurlijk resultaat.",
+                  quote: "De AI verbetert precies wat nodig is. Het resultaat is natuurlijk en niet overdreven bewerkt.",
                   author: "Jan K.",
                   role: "Vastgoedinvesteerder",
+                  initials: "JK",
+                  color: "from-green-500 to-emerald-500",
                 },
               ].map((testimonial, index) => (
-                <div key={index} className="bg-white rounded-2xl p-8 shadow-sm">
-                  <div className="flex mb-4">
+                <div
+                  key={index}
+                  className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:border-orange-200 transition-all duration-300 flex flex-col"
+                >
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-6">
                     {[...Array(5)].map((_, i) => (
                       <svg key={i} className="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 24 24">
                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                       </svg>
                     ))}
                   </div>
-                  <p className="text-slate-600 mb-4 italic">&quot;{testimonial.quote}&quot;</p>
-                  <div>
-                    <p className="font-semibold text-slate-900">{testimonial.author}</p>
-                    <p className="text-sm text-slate-500">{testimonial.role}</p>
+
+                  {/* Quote */}
+                  <p className="text-slate-600 mb-6 leading-relaxed flex-grow">&ldquo;{testimonial.quote}&rdquo;</p>
+
+                  {/* Author */}
+                  <div className="flex items-center gap-4 pt-4 border-t border-slate-100">
+                    <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${testimonial.color} flex items-center justify-center text-white font-bold text-sm shadow-lg`}>
+                      {testimonial.initials}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-slate-900">{testimonial.author}</p>
+                      <p className="text-sm text-slate-500">{testimonial.role}</p>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -810,20 +956,76 @@ export default function Home() {
         </section>
 
         {/* CTA */}
-        <section className="py-16 md:py-24">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-              Klaar om je foto&apos;s te verbeteren?
+        <section className="py-16 md:py-24 relative overflow-hidden">
+          {/* Background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+
+          {/* Decorative elements */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500" />
+          <div className="absolute top-20 left-10 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl" />
+
+          <div className="max-w-4xl mx-auto px-4 text-center relative">
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 mb-8">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+              </span>
+              <span className="text-sm font-medium text-white/90">Geen creditcard nodig</span>
+            </div>
+
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+              Klaar om je foto&apos;s te
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-400"> verbeteren?</span>
             </h2>
-            <p className="text-xl text-slate-600 mb-8">
-              Start nu gratis met 3 foto&apos;s. Geen creditcard nodig.
+            <p className="text-xl text-white/70 mb-10 max-w-2xl mx-auto">
+              Start nu gratis met 3 foto&apos;s. Zie direct het verschil en maak indruk op potentiele kopers.
             </p>
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-xl font-medium text-lg hover:from-orange-600 hover:to-amber-600 transition shadow-lg shadow-orange-500/25"
-            >
-              Probeer Pandblink gratis
-            </button>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button
+                onClick={() => document.getElementById('upload-zone')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-2xl font-semibold text-lg hover:from-orange-600 hover:to-amber-600 transition-all shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40 hover:-translate-y-0.5"
+              >
+                <span className="flex items-center gap-2">
+                  Probeer Pandblink gratis
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </span>
+              </button>
+              <Link
+                href="/credits"
+                className="px-8 py-4 text-white/90 font-semibold hover:text-white transition flex items-center gap-2"
+              >
+                Bekijk prijzen
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+
+            {/* Trust badges */}
+            <div className="flex flex-wrap items-center justify-center gap-6 mt-12 text-sm text-white/50">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                Veilige verwerking
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Resultaat in &lt;30 seconden
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Credits verlopen niet
+              </div>
+            </div>
           </div>
         </section>
 
