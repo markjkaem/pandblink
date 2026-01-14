@@ -8,6 +8,7 @@ import Link from "next/link";
 export default function Home() {
   const { data: session, status } = useSession();
   const [dragActive, setDragActive] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [enhancedImage, setEnhancedImage] = useState<string | null>(null);
@@ -131,46 +132,119 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-amber-500 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">P</span>
             </div>
-            <span className="text-xl font-bold text-slate-900">Pandblink</span>
-          </div>
+            <span className="text-lg md:text-xl font-bold text-slate-900">Pandblink</span>
+          </Link>
+
+          {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-8">
             <a href="#hoe-het-werkt" className="text-slate-600 hover:text-slate-900 transition">Hoe het werkt</a>
             <a href="#prijzen" className="text-slate-600 hover:text-slate-900 transition">Prijzen</a>
             <a href="#voorbeelden" className="text-slate-600 hover:text-slate-900 transition">Voorbeelden</a>
           </nav>
+
           {status === "loading" ? (
-            <div className="w-24 h-9 bg-slate-100 rounded-lg animate-pulse" />
+            <div className="w-20 h-8 bg-slate-100 rounded-lg animate-pulse" />
           ) : session ? (
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 bg-orange-50 px-3 py-1.5 rounded-lg">
-                <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                <span className="text-sm font-medium text-orange-600">
-                  {credits ?? session.user?.credits ?? 0} credits
-                </span>
+            <>
+              {/* Desktop: full menu */}
+              <div className="hidden md:flex items-center gap-4">
+                <Link
+                  href="/history"
+                  className="text-slate-600 hover:text-slate-900 transition text-sm font-medium"
+                >
+                  Mijn foto&apos;s
+                </Link>
+                <div className="flex items-center gap-2 bg-orange-50 px-3 py-1.5 rounded-lg">
+                  <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  <span className="text-sm font-medium text-orange-600">
+                    {credits ?? session.user?.credits ?? 0}
+                  </span>
+                </div>
+                <button
+                  onClick={() => signOut()}
+                  className="text-slate-600 hover:text-slate-900 transition text-sm font-medium"
+                >
+                  Uitloggen
+                </button>
               </div>
-              <button
-                onClick={() => signOut()}
-                className="text-slate-600 hover:text-slate-900 transition text-sm font-medium"
-              >
-                Uitloggen
-              </button>
-            </div>
+
+              {/* Mobile: credits badge + hamburger */}
+              <div className="flex md:hidden items-center gap-2">
+                <div className="flex items-center gap-1 bg-orange-50 px-2 py-1 rounded-lg">
+                  <svg className="w-3.5 h-3.5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  <span className="text-xs font-medium text-orange-600">
+                    {credits ?? session.user?.credits ?? 0}
+                  </span>
+                </div>
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="p-2 text-slate-600 hover:text-slate-900"
+                >
+                  {mobileMenuOpen ? (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </>
           ) : (
             <Link
               href="/login"
-              className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition text-sm font-medium"
+              className="bg-slate-900 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg hover:bg-slate-800 transition text-sm font-medium"
             >
               Inloggen
             </Link>
           )}
         </div>
+
+        {/* Mobile menu dropdown */}
+        {mobileMenuOpen && session && (
+          <div className="md:hidden bg-white border-t border-slate-100 px-4 py-3 space-y-3">
+            <Link
+              href="/history"
+              className="block text-slate-700 font-medium py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Mijn foto&apos;s
+            </Link>
+            <Link
+              href="/credits"
+              className="block text-slate-700 font-medium py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Credits kopen
+            </Link>
+            <a href="#hoe-het-werkt" className="block text-slate-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+              Hoe het werkt
+            </a>
+            <a href="#prijzen" className="block text-slate-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+              Prijzen
+            </a>
+            <button
+              onClick={() => {
+                signOut();
+                setMobileMenuOpen(false);
+              }}
+              className="block w-full text-left text-red-600 font-medium py-2 border-t border-slate-100 mt-2 pt-3"
+            >
+              Uitloggen
+            </button>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}
@@ -442,118 +516,135 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Testimonials */}
+        <section className="bg-slate-50 py-16 md:py-24">
+          <div className="max-w-6xl mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-12">
+              Wat klanten zeggen
+            </h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  quote: "Mijn Funda listing kreeg 40% meer views na het gebruik van Pandblink!",
+                  author: "Mark V.",
+                  role: "Particuliere verkoper",
+                },
+                {
+                  quote: "Eindelijk professionele foto's zonder dure fotograaf. Super makkelijk!",
+                  author: "Lisa B.",
+                  role: "Makelaar",
+                },
+                {
+                  quote: "De AI verbetert precies wat nodig is. Natuurlijk resultaat.",
+                  author: "Jan K.",
+                  role: "Vastgoedinvesteerder",
+                },
+              ].map((testimonial, index) => (
+                <div key={index} className="bg-white rounded-2xl p-8 shadow-sm">
+                  <div className="flex mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-slate-600 mb-4 italic">&quot;{testimonial.quote}&quot;</p>
+                  <div>
+                    <p className="font-semibold text-slate-900">{testimonial.author}</p>
+                    <p className="text-sm text-slate-500">{testimonial.role}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Pricing */}
-        <section id="prijzen" className="bg-slate-50 py-16 md:py-24">
+        <section id="prijzen" className="py-16 md:py-24">
           <div className="max-w-6xl mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-4">
               Eenvoudige prijzen
             </h2>
             <p className="text-center text-slate-600 mb-12">
-              Start gratis. Betaal alleen voor wat je nodig hebt.
+              Start gratis met 3 credits. Koop meer wanneer je ze nodig hebt. Credits verlopen niet.
             </p>
-            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
               {/* Free */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm">
-                <div className="text-sm font-medium text-slate-500 mb-2">Gratis</div>
-                <div className="text-4xl font-bold text-slate-900 mb-1">€0</div>
-                <div className="text-slate-500 mb-6">per maand</div>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center gap-2 text-slate-600">
-                    <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    3 foto&apos;s per maand
-                  </li>
-                  <li className="flex items-center gap-2 text-slate-600">
-                    <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    Basis verbetering
-                  </li>
-                  <li className="flex items-center gap-2 text-slate-600">
-                    <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    Standaard kwaliteit
-                  </li>
-                </ul>
-                <Link href="/login" className="block w-full py-3 border border-slate-300 rounded-lg text-slate-700 font-medium hover:bg-slate-50 transition text-center">
-                  Start gratis
-                </Link>
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div className="text-center">
+                  <div className="text-sm font-medium text-slate-500 mb-2">Gratis</div>
+                  <div className="text-4xl font-bold text-slate-900 mb-1">€0</div>
+                  <div className="text-slate-500 mb-4">3 credits</div>
+                  <div className="text-sm text-green-600 font-medium mb-6">Bij registratie</div>
+                  <Link href="/login" className="block w-full py-3 border border-slate-300 rounded-lg text-slate-700 font-medium hover:bg-slate-50 transition text-center">
+                    Start gratis
+                  </Link>
+                </div>
               </div>
 
-              {/* Starter */}
-              <div className="bg-white rounded-2xl p-8 shadow-lg ring-2 ring-orange-500 relative">
+              {/* 10 Credits */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div className="text-center">
+                  <div className="text-sm font-medium text-slate-500 mb-2">Starter</div>
+                  <div className="text-4xl font-bold text-slate-900 mb-1">€9</div>
+                  <div className="text-slate-500 mb-4">10 credits</div>
+                  <div className="text-sm text-green-600 font-medium mb-6">€0,90 per foto</div>
+                  <Link href="/credits" className="block w-full py-3 border border-slate-300 rounded-lg text-slate-700 font-medium hover:bg-slate-50 transition text-center">
+                    Kopen
+                  </Link>
+                </div>
+              </div>
+
+              {/* 25 Credits - Popular */}
+              <div className="bg-white rounded-2xl p-6 shadow-lg ring-2 ring-orange-500 relative">
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-sm font-medium px-3 py-1 rounded-full">
                   Populair
                 </div>
-                <div className="text-sm font-medium text-orange-500 mb-2">Starter</div>
-                <div className="text-4xl font-bold text-slate-900 mb-1">€9</div>
-                <div className="text-slate-500 mb-6">per maand</div>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center gap-2 text-slate-600">
-                    <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    15 foto&apos;s per maand
-                  </li>
-                  <li className="flex items-center gap-2 text-slate-600">
-                    <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    HD kwaliteit downloads
-                  </li>
-                  <li className="flex items-center gap-2 text-slate-600">
-                    <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    Prioriteit verwerking
-                  </li>
-                </ul>
-                <Link href="/credits" className="block w-full py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg font-medium hover:from-orange-600 hover:to-amber-600 transition text-center">
-                  Kies Starter
-                </Link>
+                <div className="text-center">
+                  <div className="text-sm font-medium text-orange-500 mb-2">Meeste waarde</div>
+                  <div className="text-4xl font-bold text-slate-900 mb-1">€19</div>
+                  <div className="text-slate-500 mb-4">25 credits</div>
+                  <div className="text-sm text-green-600 font-medium mb-6">€0,76 per foto</div>
+                  <Link href="/credits" className="block w-full py-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-lg font-medium hover:from-orange-600 hover:to-amber-600 transition text-center">
+                    Kopen
+                  </Link>
+                </div>
               </div>
 
-              {/* Pro */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm">
-                <div className="text-sm font-medium text-slate-500 mb-2">Pro</div>
-                <div className="text-4xl font-bold text-slate-900 mb-1">€29</div>
-                <div className="text-slate-500 mb-6">per maand</div>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center gap-2 text-slate-600">
-                    <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    50 foto&apos;s per maand
-                  </li>
-                  <li className="flex items-center gap-2 text-slate-600">
-                    <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    4K kwaliteit downloads
-                  </li>
-                  <li className="flex items-center gap-2 text-slate-600">
-                    <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    API toegang
-                  </li>
-                </ul>
-                <Link href="/credits" className="block w-full py-3 border border-slate-300 rounded-lg text-slate-700 font-medium hover:bg-slate-50 transition text-center">
-                  Kies Pro
-                </Link>
+              {/* 50 Credits */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div className="text-center">
+                  <div className="text-sm font-medium text-slate-500 mb-2">Pro</div>
+                  <div className="text-4xl font-bold text-slate-900 mb-1">€29</div>
+                  <div className="text-slate-500 mb-4">50 credits</div>
+                  <div className="text-sm text-green-600 font-medium mb-6">€0,58 per foto</div>
+                  <Link href="/credits" className="block w-full py-3 border border-slate-300 rounded-lg text-slate-700 font-medium hover:bg-slate-50 transition text-center">
+                    Kopen
+                  </Link>
+                </div>
               </div>
             </div>
 
-            {/* Credits option */}
-            <div className="mt-8 text-center">
-              <p className="text-slate-600">
-                Liever per foto betalen?{" "}
-                <Link href="/credits" className="text-orange-500 font-medium hover:underline">
-                  Bekijk onze credit pakketten →
-                </Link>
-              </p>
+            {/* Features */}
+            <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-slate-600">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Credits verlopen niet
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Betaal met iDEAL of creditcard
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Geen abonnement nodig
+              </div>
             </div>
           </div>
         </section>
@@ -596,7 +687,7 @@ export default function Home() {
                 <ul className="space-y-2 text-slate-400 text-sm">
                   <li><a href="#hoe-het-werkt" className="hover:text-white transition">Hoe het werkt</a></li>
                   <li><a href="#prijzen" className="hover:text-white transition">Prijzen</a></li>
-                  <li><a href="#voorbeelden" className="hover:text-white transition">Voorbeelden</a></li>
+                  <li><Link href="/faq" className="hover:text-white transition">Veelgestelde vragen</Link></li>
                 </ul>
               </div>
               <div>

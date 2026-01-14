@@ -2,9 +2,24 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { stripe, CREDIT_PACKAGES } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
+import { checkRateLimit, getClientIP } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting: 10 checkout attempts per hour per IP
+    const clientIP = getClientIP(request.headers);
+    const rateLimit = checkRateLimit(`checkout:${clientIP}`, 10, 60 * 60 * 1000);
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        {
+          error: "Te veel betalingspogingen. Probeer het later opnieuw.",
+          retryAfter: Math.ceil((rateLimit.resetTime - Date.now()) / 1000),
+        },
+        { status: 429 }
+      );
+    }
+
     const session = await auth();
 
     if (!session?.user?.id) {
@@ -24,14 +39,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get or create Stripe customer
-    let user = await prisma.user.findUnique({
+    // Get user
+    const user = await prisma.user.findUnique({
       where: { id: session.user.id },
       select: { stripeCustomerId: true, email: true },
     });
 
     let customerId = user?.stripeCustomerId;
 
+    // Verify customer exists in Stripe (handles test->live mode switch)
+    if (customerId) {
+      try {
+        await stripe.customers.retrieve(customerId);
+      } catch {
+        // Customer doesn't exist in this Stripe mode, reset it
+        customerId = null;
+      }
+    }
+
+    // Create new customer if needed
     if (!customerId) {
       const customer = await stripe.customers.create({
         email: user?.email || undefined,
@@ -77,8 +103,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ url: checkoutSession.url });
   } catch (error) {
     console.error("Checkout error:", error);
+    const errorMessage = error instanceof Error ? error.message : "Onbekende fout";
     return NextResponse.json(
-      { error: "Er ging iets mis bij het starten van de betaling" },
+      { error: `Betaling fout: ${errorMessage}` },
       { status: 500 }
     );
   }

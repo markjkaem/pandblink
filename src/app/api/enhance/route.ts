@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Replicate from "replicate";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { checkRateLimit, getClientIP } from "@/lib/rate-limit";
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
@@ -10,6 +11,20 @@ const replicate = new Replicate({
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting: 30 requests per hour per IP
+    const clientIP = getClientIP(request.headers);
+    const rateLimit = checkRateLimit(`enhance:${clientIP}`, 30, 60 * 60 * 1000);
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        {
+          error: "Te veel verzoeken. Probeer het later opnieuw.",
+          retryAfter: Math.ceil((rateLimit.resetTime - Date.now()) / 1000),
+        },
+        { status: 429 }
+      );
+    }
+
     // Check for API token
     if (!process.env.REPLICATE_API_TOKEN) {
       return NextResponse.json(
@@ -149,12 +164,14 @@ export async function POST(request: NextRequest) {
       data: { credits: { decrement: 1 } },
     });
 
-    // Log usage
+    // Log usage with history data
     await prisma.usage.create({
       data: {
         userId: session.user.id,
         type: "enhancement",
         originalSize: file.size,
+        enhancedImageUrl: enhancedImageUrl,
+        originalFileName: file.name || "foto.jpg",
       },
     });
 

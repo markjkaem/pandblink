@@ -1,0 +1,11 @@
+# Pandblink - AI Woningfoto Verbetering
+# https://pandblink.nl
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /login/verify
+Disallow: /credits/success
+
+# Sitemap
+Sitemap: https://pandblink.nl/sitemap.xml

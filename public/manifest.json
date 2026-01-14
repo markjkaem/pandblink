@@ -1,0 +1,22 @@
+{
+  "name": "Pandblink - AI Woningfoto Verbetering",
+  "short_name": "Pandblink",
+  "description": "Verbeter je woningfoto's met AI. Maak je Funda foto's professioneel met slechts één klik.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#f97316",
+  "background_color": "#ffffff",
+  "lang": "nl",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
